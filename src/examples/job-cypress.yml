@@ -1,0 +1,29 @@
+description: >
+  Usage of the Cypress job.
+
+usage:
+  version: 2.1
+
+  orbs:
+    perk: gravitywiz/perk@1
+
+  workflows:
+    test:
+      jobs:
+        - perk/cypress:
+            parallelism: 1
+            perk: gp-perk-scaffold
+            # Run steps after deps are ready (but before tests) to do various things like clone additional perks
+            # for compatibility tests
+            after-deps:
+              - perk/git-clone-perk:
+                  perk: gp-nested-forms
+                  build: true
+              - perk/git-clone-perk:
+                  perk: gwcopycat
+                  build: false
+            context:
+              - license-keys # Pull in License Keys to auto-populate environment variables such as GF_KEY
+            matrix:
+              parameters:
+                gf-version: [ "hotfix", "2.4" ]
