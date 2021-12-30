@@ -24,7 +24,7 @@ usage:
 
   jobs:
     cypress:
-      executor: perk/default
+      executor: perk/cypress
       parallelism: 1
 
       parameters:
