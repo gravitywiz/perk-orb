@@ -35,14 +35,4 @@ steps:
       paths:
         - ~/.cache/yarn
   - run: yarn build
-  - run:
-      name: Test
-      command: |
-        bash /scripts/docker-entrypoint.sh
-      environment:
-        # Project-wide environment vars do not need to be included here. They'll already be available.
-        GF_VERSION: << parameters.gf-version >>
-        WORDPRESS_DB_HOST: 127.0.0.1
-        WORDPRESS_DB_USER: wordpress
-        WORDPRESS_DB_PASSWORD: wordpress
-        CYPRESS_BASE_URL: http://localhost
+  - run-cypress-tests
