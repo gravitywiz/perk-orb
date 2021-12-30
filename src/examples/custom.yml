@@ -1,0 +1,48 @@
+description: >
+  Custom usage of the commands and executor provided by this Orb.
+
+usage:
+  version: 2.1
+
+  orbs:
+    perk: gravitywiz/perk@1
+
+  parameters:
+    perk:
+      type: string
+      default: "gp-example-perk"
+
+  workflows:
+    test:
+      jobs:
+        - cypress:
+            context:
+              - license-keys # Pull in License Keys to auto-populate environment variables such as GF_KEY
+            matrix:
+              parameters:
+                gf-version: [ "hotfix", "2.4" ]
+
+  jobs:
+    cypress:
+      executor: perk/default
+      parallelism: 1
+
+      parameters:
+        gf-version:
+          type: enum
+          enum: [ "hotfix", "beta", "auto-update", "2.4" ]
+
+      working_directory: "/plugins/<< pipeline.parameters.perk >>"
+      steps:
+        - checkout
+        - perk/install-yarn-deps
+        - perk/git-clone-gravityforms:
+            version: << parameters.gf-version >>
+        - perk/git-clone-perk:
+            perk: gravityperks
+        - perk/git-clone-perk:
+            perk: gp-nested-forms
+            build: true
+        - run: yarn build
+        - perk/run-cypress-tests:
+            gf-version: << parameters.gf-version >>
