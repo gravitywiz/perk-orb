@@ -5,9 +5,21 @@ parameters:
   perk:
     type: string
     description: "The perk directory/repo name."
+  build:
+    type: boolean
+    default: false
+    description: >
+      Whether or not to run build scripts (currently yarn build) for the perk.
 
 steps:
   - run:
       name: 'Git Clone Perk: <<parameters.perk>>'
       command: |
         git clone git@github.com:gravitywiz/<<parameters.perk>>.git /plugins/<<parameters.perk>>
+  - when:
+      condition:
+        equal: [ true, << parameters.build >> ]
+      steps:
+        - run: |
+            cd /plugins/<<parameters.perk>>
+            yarn build
