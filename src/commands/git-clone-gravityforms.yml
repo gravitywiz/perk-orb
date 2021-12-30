@@ -1,0 +1,17 @@
+description: >
+  Git Clones Gravity Forms.
+
+parameters:
+  version:
+    type: string
+    description: "The version of Gravity Forms to checkout."
+
+steps:
+  - when:
+      condition:
+        equal: [ '2.4', << parameters.version >> ]
+      steps:
+        - run: |
+            git clone git@github.com:gravitywiz/gravityforms.git /plugins/gravityforms
+            cd /plugins/gravityforms
+            git checkout tags/v2.4.24.1 -b 2.4
