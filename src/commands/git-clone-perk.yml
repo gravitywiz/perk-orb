@@ -20,6 +20,9 @@ steps:
       condition:
         equal: [ true, << parameters.build >> ]
       steps:
-        - run: |
-            cd /plugins/<<parameters.perk>>
-            yarn build
+        - run:
+            name: 'Build Perk: <<parameters.perk>>'
+            command: |
+              cd /plugins/<<parameters.perk>>
+              yarn
+              yarn build
