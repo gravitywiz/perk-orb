@@ -42,8 +42,10 @@ steps:
       condition:
         equal: [ true, << parameters.run-yarn-build >> ]
       steps:
-        - run: |
-            yarn build
+        - run:
+            name: "Build Perk: << parameters.perk >>"
+            command: |
+              yarn build
   - steps: << parameters.after-deps >>
   - run-cypress-tests:
       gf-version: << parameters.gf-version >>
