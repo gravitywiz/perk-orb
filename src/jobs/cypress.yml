@@ -35,4 +35,5 @@ steps:
       paths:
         - ~/.cache/yarn
   - run: yarn build
-  - run-cypress-tests
+  - run-cypress-tests:
+      gf-version: << parameters.gf-version >>

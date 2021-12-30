@@ -1,6 +1,11 @@
 description: >
   Run Cypress E2E tests.
 
+parameters:
+  gf-version:
+    type: string
+    description: "The version of Gravity Forms in use."
+
 steps:
   - run:
       name: Run Cypress Tests
