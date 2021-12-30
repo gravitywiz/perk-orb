@@ -6,34 +6,32 @@ executor: default
 parameters:
   gf-version:
     type: enum
+    description: >
+      The release channel of Gravity Forms to use for the tests.
     enum: [ "hotfix", "beta", "auto-update", "2.4" ]
+  run-yarn-build:
+    type: boolean
+    description: >
+      Whether or not to run yarn build.
+    default: true
+  after-deps:
+    description: "Steps that will be executed after dependencies are installed, but before tests are run"
+    type: steps
+    default: [ ]
 
 steps:
   - checkout
-  - git-clone-perk:
-      perk: gravityperks
+  - install-yarn-deps
   - git-clone-gravityforms:
       version: << parameters.gf-version >>
-  - run:
-      name: Check current version of node
-      command: node -v
-  - run:
-      name: "Install Yarn"
-      command: |
-        npm install --global yarn
-  - run: yarn -v
-  - restore_cache:
-      name: Restore Yarn Package Cache
-      keys:
-        - yarn-packages-{{ checksum "yarn.lock" }}
-  - run:
-      name: Install Dependencies
-      command: yarn install --frozen-lockfile --cache-folder ~/.cache/yarn
-  - save_cache:
-      name: Save Yarn Package Cache
-      key: yarn-packages-{{ checksum "yarn.lock" }}
-      paths:
-        - ~/.cache/yarn
-  - run: yarn build
+  - git-clone-perk:
+      perk: gravityperks
+  - when:
+      condition:
+        equal: [ true, << parameters.run-yarn-build >> ]
+      steps:
+        - run: |
+            yarn build
+  - steps: << parameters.after-deps >>
   - run-cypress-tests:
       gf-version: << parameters.gf-version >>
