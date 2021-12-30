@@ -14,6 +14,6 @@ parameters:
   mysql:
     default: '5.7'
     description: >
-      Pick a specific circleci/node image variant:
-      https://hub.docker.com/r/cimg/node/tags
+      The MySQL version to run WordPress on during the tests.
+      See https://hub.docker.com/r/circleci/mysql/tags for available tags.
     type: string
