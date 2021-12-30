@@ -1,0 +1,13 @@
+description: >
+  Git Clones a perk into plugins directory.
+
+parameters:
+  perk:
+    type: string
+    description: "The perk directory/repo name."
+
+steps:
+  - run:
+      name: 'Git Clone Perk: <<parameters.perk>>'
+      command: |
+        git clone git@github.com:gravitywiz/<<parameters.perk>>.git /plugins/<<parameters.perk>>

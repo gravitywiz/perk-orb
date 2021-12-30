@@ -1,0 +1,39 @@
+description: >
+  Run Cypress E2E tests.
+
+executor: default
+
+parameters:
+  gf-version:
+    type: enum
+    enum: [ "hotfix", "beta", "auto-update", "2.4" ]
+
+steps:
+  - checkout
+  - git-clone-perk:
+      perk: gravityperks
+  - git-clone-gravityforms:
+      version: << parameters.gf-version >>
+  - run:
+      name: Check current version of node
+      command: node -v
+  - run:
+      name: "Install Yarn"
+      command: |
+        npm install --global yarn
+  - run: yarn -v
+  - restore_cache:
+      name: Restore Yarn Package Cache
+      keys:
+        - yarn-packages-{{ checksum "yarn.lock" }}
+  - run:
+      name: Install Dependencies
+      command: yarn install --frozen-lockfile --cache-folder ~/.cache/yarn
+  - save_cache:
+      name: Save Yarn Package Cache
+      key: yarn-packages-{{ checksum "yarn.lock" }}
+      paths:
+        - ~/.cache/yarn
+  - run: yarn build
+  - run-cypress-tests:
+      gf-version: << parameters.gf-version >>
