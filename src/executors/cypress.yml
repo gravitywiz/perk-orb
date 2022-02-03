@@ -10,7 +10,7 @@ docker:
       MYSQL_USER: wordpress
       MYSQL_PASSWORD: wordpress
       MYSQL_ROOT_HOST: "%"
-      GF_VERSION: << parameters.gf-version >>
+      CYPRESS_GF_VERSION: << parameters.gf-version >>
 parameters:
   mysql:
     default: '5.7'
