@@ -3,7 +3,7 @@ description: >
 docker:
   # Primary container image where all steps run.
   - image: gravitywiz/cypress-with-wp:apache
-  - image: 'circleci/mysql:<<parameters.mysql>>'
+  - image: 'cimg/mysql:<<parameters.mysql>>'
     environment:
       MYSQL_HOST: 127.0.0.1
       MYSQL_DATABASE: wordpress
