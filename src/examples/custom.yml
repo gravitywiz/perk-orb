@@ -24,7 +24,10 @@ usage:
 
   jobs:
     cypress:
-      executor: perk/cypress
+      executor:
+        name: perk/cypress
+        gf-version: << parameters.gf-version >>
+
       parallelism: 1
 
       parameters:

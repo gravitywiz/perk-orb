@@ -1,7 +1,9 @@
 description: >
   Run Cypress E2E tests.
 
-executor: cypress
+executor:
+  name: cypress
+  gf-version: << parameters.gf-version >>
 
 parameters:
   gf-version:
