@@ -10,6 +10,7 @@ docker:
       MYSQL_USER: wordpress
       MYSQL_PASSWORD: wordpress
       MYSQL_ROOT_HOST: "%"
+      GF_VERSION: << parameters.gf-version >>
 parameters:
   mysql:
     default: '5.7'
@@ -17,3 +18,8 @@ parameters:
       The MySQL version to run WordPress on during the tests.
       See https://hub.docker.com/r/circleci/mysql/tags for available tags.
     type: string
+  gf-version:
+    type: enum
+    description: >
+      The release channel of Gravity Forms to use for the tests.
+    enum: [ "hotfix", "beta", "auto-update", "2.4" ]
