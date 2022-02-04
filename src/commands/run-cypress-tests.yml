@@ -14,6 +14,7 @@ steps:
       environment:
         # Project-wide environment vars do not need to be included here. They'll already be available.
         GF_VERSION: << parameters.gf-version >>
+        CYPRESS_GF_VERSION: << parameters.gf-version >>
         WORDPRESS_DB_HOST: 127.0.0.1
         WORDPRESS_DB_USER: wordpress
         WORDPRESS_DB_PASSWORD: wordpress
