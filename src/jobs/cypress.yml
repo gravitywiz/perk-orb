@@ -33,6 +33,9 @@ parameters:
 working_directory: "/plugins/<< parameters.perk >>"
 parallelism: << parameters.parallelism >>
 
+environment:
+  CYPRESS_GF_VERSION: << parameters.gf-version >>
+
 steps:
   - checkout
   - install-yarn-deps
