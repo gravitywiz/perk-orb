@@ -27,6 +27,7 @@ usage:
       executor:
         name: perk/cypress
         gf-version: << parameters.gf-version >>
+        cypress-version: << parameters.cypress-version >>
 
       parallelism: 1
 
@@ -34,6 +35,9 @@ usage:
         gf-version:
           type: enum
           enum: [ "hotfix", "beta", "auto-update", "2.4" ]
+        cypress-version:
+          type: enum
+          enum: [ "9", "10" ]
 
       working_directory: "/plugins/<< pipeline.parameters.perk >>"
       steps:

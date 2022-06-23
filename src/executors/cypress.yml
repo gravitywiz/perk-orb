@@ -2,7 +2,7 @@ description: >
   Docker executor for running Cypress with a sidecar MySQL container.
 docker:
   # Primary container image where all steps run.
-  - image: gravitywiz/cypress-with-wp:apache
+  - image: 'gravitywiz/cypress-with-wp:<<parameters.cypress-version>>'
     environment:
       CYPRESS_GF_VERSION: << parameters.gf-version >>
   - image: 'cimg/mysql:<<parameters.mysql>>'
@@ -24,3 +24,9 @@ parameters:
     description: >
       The release channel of Gravity Forms to use for the tests.
     enum: [ "hotfix", "beta", "auto-update", "2.4" ]
+  cypress-version:
+    type: enum
+    description: >
+      The major version of Cypress to use.
+    enum: [ "9", "10" ]
+    default: "9"
