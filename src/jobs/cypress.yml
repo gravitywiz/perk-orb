@@ -4,8 +4,14 @@ description: >
 executor:
   name: cypress
   gf-version: << parameters.gf-version >>
+  cypress-version: << parameters.cypress-version >>
 
 parameters:
+  cypress-version:
+    type: enum
+    description: >
+      The major version of Cypress to use.
+    enum: [ "9", "10" ]
   gf-version:
     type: enum
     description: >
