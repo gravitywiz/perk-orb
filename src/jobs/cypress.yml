@@ -11,8 +11,8 @@ parameters:
     type: enum
     description: >
       The major version of Cypress to use.
-    enum: [ "9", "10" ]
-    default: "9"
+    enum: [ "9", "10", "latest" ]
+    default: "latest"
   gf-version:
     type: enum
     description: >
@@ -32,6 +32,11 @@ parameters:
     description: >
       Whether or not to run yarn build.
     default: true
+  clone-gravityperks:
+    type: boolean
+    description: >
+      Whether Gravity Perks itself should be cloned.
+    default: true
   after-deps:
     description: "Steps that will be executed after dependencies are installed, but before tests are run"
     type: steps
@@ -48,8 +53,12 @@ steps:
   - install-yarn-deps
   - git-clone-gravityforms:
       version: << parameters.gf-version >>
-  - git-clone-perk:
-      perk: gravityperks
+  - when:
+      condition:
+        equal: [ true, << parameters.clone-gravityperks >> ]
+      steps:
+        - git-clone-perk:
+            perk: gravityperks
   - when:
       condition:
         equal: [ true, << parameters.run-yarn-build >> ]
