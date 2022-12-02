@@ -16,6 +16,7 @@ Additional READMEs are available in each directory.
 * When ready to publish a new production version, create a Pull Request from _feature branch_ to `master`.
 * The title of the pull request must contain a special semver tag: `[semver:<segment>]` where `<segment>` is replaced by one of the following values.
 
+
 | Increment | Description|
 | ----------| -----------|
 | major     | Issue a 1.0.0 incremented release|
