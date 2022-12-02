@@ -11,8 +11,8 @@ parameters:
     type: enum
     description: >
       The major version of Cypress to use.
-    default: "9"
     enum: [ "9", "10", "latest" ]
+    default: "latest"
   gf-version:
     type: enum
     description: >
