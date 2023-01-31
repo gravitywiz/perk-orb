@@ -19,3 +19,5 @@ steps:
         WORDPRESS_DB_USER: wordpress
         WORDPRESS_DB_PASSWORD: wordpress
         CYPRESS_BASE_URL: http://localhost
+  - store_artifacts:
+      path: /wordpress/wp-content/debug.log
