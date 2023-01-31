@@ -8,7 +8,7 @@ steps:
   - run:
       name: "Install Yarn"
       command: |
-        npm install --global yarn
+        npm install --force --global yarn
   - run: yarn -v
   - restore_cache:
       name: Restore Yarn Package Cache
