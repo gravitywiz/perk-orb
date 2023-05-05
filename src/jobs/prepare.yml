@@ -1,0 +1,70 @@
+description: >
+  Prepare for Cypress E2E tests by downloading and building everything and persisting it to the workspace.
+
+  gf-version: << parameters.gf-version >>
+  cypress-version: << parameters.cypress-version >>
+
+parameters:
+  cypress-version:
+    type: enum
+    description: >
+      The major version of Cypress to use.
+    enum: [ "9", "10", "latest" ]
+    default: "latest"
+  gf-version:
+    type: enum
+    description: >
+      The release channel of Gravity Forms to use for the tests.
+    enum: [ "hotfix", "beta", "auto-update", "2.4" ]
+  perk:
+    type: string
+    description: >
+      The perk slug (used for repo and plugin directory). Example: `gp-populate-anything`
+  parallelism:
+    type: integer
+    description: >
+      Number of containers to run Cypress in.
+    default: 1
+  run-yarn-build:
+    type: boolean
+    description: >
+      Whether or not to run yarn build.
+    default: true
+  clone-gravityperks:
+    type: boolean
+    description: >
+      Whether Gravity Perks itself should be cloned.
+    default: true
+  after-deps:
+    description: "Steps that will be executed after dependencies are installed, but before tests are run"
+    type: steps
+    default: [ ]
+
+working_directory: "/plugins/<< parameters.perk >>"
+parallelism: 1
+
+steps:
+  - checkout
+  - install-yarn-deps
+  - git-clone-gravityforms:
+      version: << parameters.gf-version >>
+  - when:
+      condition:
+        equal: [ true, << parameters.clone-gravityperks >> ]
+      steps:
+        - git-clone-perk:
+            perk: gravityperks
+  - when:
+      condition:
+        equal: [ true, << parameters.run-yarn-build >> ]
+      steps:
+        - run:
+            name: "Build Perk: << parameters.perk >>"
+            command: |
+              yarn build
+  - steps: << parameters.after-deps >>
+  - persist_to_workspace:
+      root: /plugins
+      paths:
+        - "**/*"
+

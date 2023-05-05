@@ -1,5 +1,13 @@
 # Perk Orb for CircleCI
 
+### Important note
+
+If you're unable to publish, try running the following:
+
+```bash
+circleci orb pack ./src | circleci orb publish - gravitywiz/perk@dev:alpha
+```
+
 ### [➡️ Orb on CircleCI](https://circleci.com/developer/orbs/orb/gravitywiz/perk) (requires login)
 
 An orb that contains various commands, executors, and examples for testing perks using CircleCI.
