@@ -22,6 +22,8 @@ steps:
       steps:
         - run:
             name: 'Build Perk: <<parameters.perk>>'
+            environment:
+              CYPRESS_INSTALL_BINARY: 0
             command: |
               cd /plugins/<<parameters.perk>>
               yarn
