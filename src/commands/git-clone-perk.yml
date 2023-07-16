@@ -46,6 +46,8 @@ steps:
               # Save the contents of /tmp/<<parameters.perk>>-commit.txt to a dotfile
               # so we can skip the build next time if the perk commit hash hasn't changed.
               cat /tmp/<<parameters.perk>>-commit.txt > .cached-commit.txt
+            environment:
+              CYPRESS_INSTALL_BINARY: 0
   - save_cache:
       name: Cache <<parameters.perk>>
       key: dep-<<parameters.perk>>-{{ checksum "/tmp/<<parameters.perk>>-commit.txt" }}
