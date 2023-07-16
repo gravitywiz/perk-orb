@@ -19,7 +19,7 @@ steps:
         cd /plugins/<<parameters.perk>>
         git rev-parse HEAD > /tmp/<<parameters.perk>>-commit.txt
   - restore_cache:
-      name: Restore Yarn Package Cache
+      name: Restore <<parameters.perk>> Cache
       keys:
         - dep-<<parameters.perk>>-{{ checksum "/tmp/<<parameters.perk>>-commit.txt" }}
   - when:
