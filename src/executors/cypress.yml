@@ -2,7 +2,7 @@ description: >
   Docker executor for running Cypress with a sidecar MySQL container.
 docker:
   # Primary container image where all steps run.
-  - image: 'gravitywiz/cypress-with-wp:<<parameters.cypress-version>>'
+  - image: gravitywiz/circleci-node-for-wp:latest
     environment:
       CYPRESS_GF_VERSION: << parameters.gf-version >>
   - image: 'cimg/mysql:<<parameters.mysql>>'
