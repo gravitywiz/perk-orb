@@ -10,7 +10,14 @@ steps:
   - run:
       name: Run Cypress Tests
       command: |
-        bash /scripts/docker-entrypoint.sh
+        bash /scripts/bootstrap-wp.sh
+        bash /scripts/bootstrap-apache.sh
+
+        echo "WordPress Version: $(wp core version)"
+        echo "WordPress Home URL: $(wp option get home)"
+
+        echo "Starting Cypress..."
+        unset DISPLAY && yarn cypress run --group "GF: ${GF_VERSION:-hotfix}" --record --parallel
       environment:
         # Project-wide environment vars do not need to be included here. They'll already be available.
         GF_VERSION: << parameters.gf-version >>

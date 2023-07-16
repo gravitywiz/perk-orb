@@ -16,6 +16,12 @@ steps:
       name: 'Git Clone Perk: <<parameters.perk>>'
       command: |
         git clone git@github.com:gravitywiz/<<parameters.perk>>.git /plugins/<<parameters.perk>>
+        cd /plugins/<<parameters.perk>>
+        git rev-parse HEAD > /tmp/<<parameters.perk>>-commit.txt
+  - restore_cache:
+      name: Restore Yarn Package Cache
+      keys:
+        - dep-<<parameters.perk>>-{{ checksum "/tmp/<<parameters.perk>>-commit.txt" }}
   - when:
       condition:
         equal: [ true, << parameters.build >> ]
@@ -24,5 +30,24 @@ steps:
             name: 'Build Perk: <<parameters.perk>>'
             command: |
               cd /plugins/<<parameters.perk>>
+
+              # Check if .cached-commit equals /tmp/<<parameters.perk>>-commit.txt, if so, bail
+              if [ -f .cached-commit.txt ] && [ "$(cat .cached-commit.txt)" = "$(cat /tmp/<<parameters.perk>>-commit.txt)" ]; then
+                echo "Cache hit, skipping build."
+                exit 0
+              fi
+
               yarn
               yarn build
+
+              # Remove node_modules to speed up cache time
+              rm -rf node_modules
+
+              # Save the contents of /tmp/<<parameters.perk>>-commit.txt to a dotfile
+              # so we can skip the build next time if the perk commit hash hasn't changed.
+              cat /tmp/<<parameters.perk>>-commit.txt > .cached-commit.txt
+  - save_cache:
+      name: Cache <<parameters.perk>>
+      key: dep-<<parameters.perk>>-{{ checksum "/tmp/<<parameters.perk>>-commit.txt" }}
+      paths:
+        - /plugins/<<parameters.perk>>
