@@ -19,6 +19,8 @@ steps:
         cd /plugins/<<parameters.perk>>
         git rev-parse HEAD > /tmp/<<parameters.perk>>-commit.txt
   - restore_cache:
+      condition:
+        equal: [ true, << parameters.build >> ]
       name: Restore <<parameters.perk>> Cache
       keys:
         - dep-<<parameters.perk>>-{{ checksum "/tmp/<<parameters.perk>>-commit.txt" }}
@@ -49,6 +51,8 @@ steps:
             environment:
               CYPRESS_INSTALL_BINARY: 0
   - save_cache:
+      condition:
+        equal: [ true, << parameters.build >> ]
       name: Cache <<parameters.perk>>
       key: dep-<<parameters.perk>>-{{ checksum "/tmp/<<parameters.perk>>-commit.txt" }}
       paths:
