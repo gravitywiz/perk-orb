@@ -4,13 +4,12 @@ description: >
 executor:
   name: cypress
   gf-version: << parameters.gf-version >>
-  cypress-version: << parameters.cypress-version >>
 
 parameters:
   cypress-version:
     type: enum
     description: >
-      The major version of Cypress to use.
+      Deprecated
     enum: [ "9", "10", "latest" ]
     default: "latest"
   gf-version:

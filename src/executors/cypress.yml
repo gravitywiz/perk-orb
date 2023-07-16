@@ -24,9 +24,3 @@ parameters:
     description: >
       The release channel of Gravity Forms to use for the tests.
     enum: [ "hotfix", "beta", "auto-update", "2.4" ]
-  cypress-version:
-    type: enum
-    description: >
-      The major version of Cypress to use.
-    enum: [ "9", "10", "latest" ]
-    default: "latest"
