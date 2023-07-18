@@ -11,6 +11,7 @@ usage:
     test:
       jobs:
         - perk/cypress:
+            resource_class: large
             parallelism: 1
             perk: gp-perk-scaffold
             # Run steps after deps are ready (but before tests) to do various things like clone additional perks
