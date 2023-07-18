@@ -4,6 +4,7 @@ description: >
 executor:
   name: cypress
   gf-version: << parameters.gf-version >>
+  mysql: "8.0"
 
 parameters:
   cypress-version:
