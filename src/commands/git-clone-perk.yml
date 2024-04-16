@@ -15,8 +15,20 @@ steps:
   - run:
       name: 'Git Clone Perk: <<parameters.perk>>'
       command: |
-        git clone git@github.com:gravitywiz/<<parameters.perk>>.git /plugins/<<parameters.perk>>
+        # Convert perk name to uppercase and append _BRANCH to construct the environment variable name
+        PERK_BRANCH_VAR=$(echo "<<parameters.perk>>_BRANCH" | tr '[:lower:]' '[:upper:]')
+
+        # Use parameter expansion to get the value of the environment variable
+        PERK_BRANCH=${!PERK_BRANCH_VAR}
+
+        # Clone the repositories by don't checkout any files yet.
+        git clone --no-checkout git@github.com:gravitywiz/<<parameters.perk>>.git /plugins/<<parameters.perk>>
+
         cd /plugins/<<parameters.perk>>
+
+        # Checkout the branch defined by PERK_BRANCH or default to the current branch. This also checks out files.
+        git checkout ${PERK_BRANCH:-$(git symbolic-ref refs/remotes/origin/HEAD | sed 's@^refs/remotes/origin/@@')}
+
         git rev-parse HEAD > /tmp/<<parameters.perk>>-commit.txt
   - restore_cache:
       condition:
