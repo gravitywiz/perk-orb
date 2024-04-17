@@ -16,7 +16,7 @@ steps:
       name: 'Git Clone Perk: <<parameters.perk>>'
       command: |
         # Convert perk name to uppercase and append _BRANCH to construct the environment variable name
-        PERK_BRANCH_VAR=$(echo "<<parameters.perk>>_BRANCH" | tr '[:lower:]' '[:upper:]')
+        PERK_BRANCH_VAR=$(echo "<<parameters.perk>>_BRANCH" | tr '[:lower:]-' '[:upper:]_')
 
         # Use parameter expansion to get the value of the environment variable
         PERK_BRANCH=${!PERK_BRANCH_VAR}
