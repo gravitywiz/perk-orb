@@ -1,0 +1,27 @@
+description: >
+  Install fnm and switch Node versions if specified version is not blank and differs from the version in the container.
+
+parameters:
+  version:
+    type: string
+    description: >
+      The version of Node.js to use.
+    default: ""
+
+steps:
+  - run:
+      name: Check current version of node
+      command: node -v
+  - run:
+      name: "Install fnm (Fast Node Manager) and specified Node.js version"
+      command: |
+        if [ -n "<< parameters.version >>" ]; then
+          CURRENT_NODE_VERSION=$(node -v)
+          if [ "$CURRENT_NODE_VERSION" != "v<< parameters.version >>" ]; then
+            curl -fsSL https://fnm.vercel.app/install | bash
+            export PATH=$HOME/.fnm:$PATH
+            eval "$(fnm env)"
+            fnm install << parameters.version >>
+            fnm use << parameters.version >>
+          fi
+        fi
