@@ -1,5 +1,5 @@
 description: >
-  Install fnm and switch Node versions if specified version is not blank and differs from the version in the container.
+  Install nvm and switch Node versions if specified version is not blank and differs from the version in the container.
 
 parameters:
   version:
@@ -10,18 +10,17 @@ parameters:
 
 steps:
   - run:
-      name: Check current version of node
-      command: node -v
-  - run:
-      name: "Install fnm (Fast Node Manager) and specified Node.js version"
+      name: Install nvm and set up Node.js
       command: |
         if [ -n "<< parameters.version >>" ]; then
-          CURRENT_NODE_VERSION=$(node -v)
-          if [ "$CURRENT_NODE_VERSION" != "v<< parameters.version >>" ]; then
-            curl -fsSL https://fnm.vercel.app/install | bash
-            export PATH=$HOME/.fnm:$PATH
-            eval "$(fnm env)"
-            fnm install << parameters.version >>
-            fnm use << parameters.version >>
-          fi
+          # Install and use the specified Node.js version
+          nvm install << parameters.version >>
+          nvm use << parameters.version >>
+          nvm alias default << parameters.version >>
+
+          # Verify the new Node.js version
+          node -v
+        else
+          echo "No Node.js version specified, using the current version:"
+          node -v
         fi
