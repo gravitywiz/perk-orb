@@ -12,11 +12,16 @@ parameters:
       Deprecated
     enum: [ "9", "10", "latest" ]
     default: "latest"
+  node-version:
+    type: string
+    description: >
+      The version of Node.js to use. The container has v16.16.0 pre-installed.
+    default: ""
   gf-version:
     type: enum
     description: >
       The release channel of Gravity Forms to use for the tests.
-    enum: [ "hotfix", "beta", "auto-update", "2.4" ]
+    enum: [ "hotfix", "beta", "auto-update" ]
   perk:
     type: string
     description: >
@@ -49,6 +54,8 @@ environment:
 
 steps:
   - checkout
+  - ensure-node-version:
+      version: << parameters.node-version >>
   - install-yarn-deps
   - git-clone-gravityforms:
       version: << parameters.gf-version >>
