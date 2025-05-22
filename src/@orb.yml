@@ -1,7 +1,7 @@
-version: 2.1
+version: 3.0
 
 description: >
-  Orb for performing actions on Gravity Perks including running tests.
+  Orb for performing actions on Gravity Wiz Plugins including running tests.
 
 display:
   home_url: "https://www.notion.so/gravitywiz/Developer-Docs-a589ffb06f7c4d73b6da3defe1c86f78"
