@@ -2,10 +2,10 @@ description: >
   Usage of the Cypress job.
 
 usage:
-  version: 2.1
+  version: 3.0
 
   orbs:
-    perk: gravitywiz/perk@1
+    perk: gravitywiz/perk@3
 
   workflows:
     test:
