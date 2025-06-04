@@ -5,7 +5,7 @@ usage:
   version: 2.1
 
   orbs:
-    perk: gravitywiz/perk@1
+    perk: gravitywiz/perk@3
 
   workflows:
     test:
